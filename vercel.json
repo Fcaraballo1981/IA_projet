@@ -1,0 +1,21 @@
+
+{
+  "rewrites": [
+    {
+      "source": "/help",
+      "destination": "https://chatbase.co/{klh8Q7KZ1ZK_RhyfrrykC}/help"
+    },
+    {
+      "source": "/help/:path*",
+      "destination": "https://chatbase.co/{klh8Q7KZ1ZK_RhyfrrykC}/help/:path*"
+    },
+    {
+      "source": "/__cb/:path*",
+      "destination": "https://chatbase.co/__cb/:path*"
+    },
+    {
+      "source": "/api/chat/{klh8Q7KZ1ZK_RhyfrrykC}/:path*",
+      "destination": "https://chatbase.co/api/chat/{klh8Q7KZ1ZK_RhyfrrykC}/:path*"
+    }
+  ]
+}
