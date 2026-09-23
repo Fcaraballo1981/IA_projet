@@ -1,15 +1,868 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="description" content="BELLEZA — Cirugía plástica, estética y reconstructiva. Atención personalizada, tecnología y seguridad. Montevideo, Uruguay.">
+    <meta name="theme-color" content="#0f1115">
+    <title>BELLEZA | Cirugía Plástica & Estética</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #0f1115;
+            --bg-soft: #f6f2ed;
+            --ink: #ffffff;
+            --ink-soft: #b9b9c2;
+            --gold: #c9a96a;
+            --gold-dark: #a5853f;
+            --line: rgba(255,255,255,.12);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            overflow-x: hidden;
+        }
+
+        body.loaded #preloader { opacity: 0; visibility: hidden; }
+
+        ::selection { background: var(--gold); color: #111; }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            font-size: .78rem;
+            letter-spacing: .18em;
+            font-weight: 600;
+            color: var(--gold);
+            text-transform: uppercase;
+        }
+
+        .section-label::before {
+            content: "";
+            width: 28px; height: 1px;
+            background: var(--gold);
+            display: inline-block;
+            margin-right: 12px;
+        }
+
+        .display-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.2rem, 5vw, 3.6rem);
+            font-weight: 500;
+            line-height: 1.08;
+            margin-top: 1.1rem;
+            margin-bottom: 0;
+        }
+
+        .display-title em { font-style: italic; color: var(--gold); }
+
+        .lead-copy { font-size: 1.18rem; font-weight: 300; line-height: 1.65; color: #d8d8de; }
+
+        .body-copy { font-weight: 300; line-height: 1.7; color: #9a9aa5; margin-bottom: 0; }
+
+        .section-space { padding: 110px 0; }
+
+        /* PRELOADER */
+        #preloader {
+            position: fixed; inset: 0; z-index: 9999;
+            background: var(--bg);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            transition: opacity .5s ease, visibility .5s ease;
+        }
+        .preloader-logo { font-family: 'Playfair Display', serif; font-size: 2.4rem; color: #fff; }
+        .preloader-logo span { color: var(--gold); }
+        .preloader-line { width: 120px; height: 1px; background: rgba(255,255,255,.15); margin-top: 18px; overflow: hidden; }
+        .preloader-line span { display: block; width: 40%; height: 100%; background: var(--gold); animation: slide 1.1s infinite ease-in-out; }
+        @keyframes slide { 0% { transform: translateX(-100%); } 100% { transform: translateX(350%); } }
+
+        /* NAVBAR */
+        .navbar { backdrop-filter: blur(14px); transition: background .3s ease, box-shadow .3s ease; padding: 20px 0; }
+        .navbar.scrolled { background: rgba(15,17,21,.92); box-shadow: 0 10px 40px rgba(0,0,0,.35); padding: 12px 0; }
+        .navbar-brand { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 600; color: #fff !important; letter-spacing: .02em; }
+        .navbar-brand span { color: var(--gold); }
+        .nav-link { color: #cfcfd6 !important; font-weight: 400; font-size: .95rem; }
+        .nav-link:hover, .nav-link.active { color: var(--gold) !important; }
+        .navbar-toggler { color: #fff; }
+        .navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: #131313 !important;
+            border: none;
+            font-weight: 600;
+            letter-spacing: .02em;
+            padding: 13px 26px;
+            border-radius: 60px;
+            transition: transform .25s ease, box-shadow .25s ease;
+        }
+        .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(201,169,106,.35); }
+
+        .btn-nav { padding: 11px 22px; border-radius: 60px; font-size: .9rem; }
+
+        .btn-outline-chat {
+            border: 1px solid rgba(255,255,255,.35);
+            color: #fff;
+            border-radius: 60px;
+            padding: 13px 26px;
+            font-weight: 500;
+            transition: all .25s ease;
+            white-space: nowrap;
+        }
+        .btn-outline-chat:hover { background: #fff; color: #0f1115; border-color: #fff; transform: translateY(-2px); }
+
+        /* HERO */
+        .hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; }
+        .hero-bg {
+            position: absolute; inset: 0; z-index: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 70% 20%, rgba(201,169,106,.16), transparent 60%),
+                radial-gradient(ellipse 60% 60% at 15% 85%, rgba(120,120,140,.18), transparent 60%),
+                linear-gradient(180deg, #14161c 0%, #0f1115 100%);
+        }
+        .hero-bg::after {
+            content: "";
+            position: absolute; inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+            background-size: 90px 90px;
+        }
+        .hero-shade { position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse 120% 100% at 50% 100%, rgba(15,17,21,.9), transparent 60%); }
+        .hero-content { position: relative; z-index: 2; padding: 140px 0 110px; }
+
+        .hero-kicker {
+            font-size: .78rem; letter-spacing: .22em; color: var(--gold);
+            text-transform: uppercase; font-weight: 600; margin-bottom: 1.4rem;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 7vw, 5.2rem);
+            font-weight: 500; line-height: 1.02;
+        }
+        .hero h1 em { font-style: italic; color: var(--gold); }
+
+        .hero-description {
+            max-width: 520px; font-weight: 300; font-size: 1.12rem;
+            color: #b9b9c2; line-height: 1.7; margin: 1.8rem 0 2.4rem;
+        }
+
+        .hero-actions { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+
+        .hero-link { color: #cfcfd6; text-decoration: none; font-size: .95rem; border-bottom: 1px solid rgba(255,255,255,.25); padding-bottom: 4px; transition: color .2s; }
+        .hero-link:hover { color: var(--gold); }
+
+        .hero-bottom {
+            position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+            padding: 26px 0; border-top: 1px solid var(--line);
+        }
+        .hero-location { color: #9a9aa5; font-size: .9rem; display: flex; align-items: center; gap: 8px; }
+        .hero-location i { color: var(--gold); }
+        .hero-scroll { color: #9a9aa5; font-size: .72rem; letter-spacing: .25em; text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
+        .hero-scroll span { width: 1px; height: 34px; background: var(--gold); display: inline-block; }
+
+        /* REVEAL */
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s ease; }
+        .reveal.delay-1 { transition-delay: .12s; }
+        .reveal.delay-2 { transition-delay: .24s; }
+        .reveal.delay-3 { transition-delay: .36s; }
+        body.loaded .reveal { opacity: 1; transform: none; }
+
+        /* TRUST STRIP */
+        .trust-strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+        .trust-item { padding: 30px 18px; display: flex; flex-direction: column; gap: 6px; border-right: 1px solid var(--line); }
+        .trust-item:last-child { border-right: none; }
+        .trust-item strong { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 500; color: var(--gold); }
+        .trust-item span { color: #9a9aa5; font-size: .88rem; }
+
+        /* FILOSOFÍA */
+        .philosophy-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 20px; }
+        .philosophy-feature { border-radius: 18px; overflow: hidden; position: relative; min-height: 300px; background: #171a21; border: 1px solid var(--line); }
+        .feature-large img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; opacity: .65; }
+        .feature-caption { position: absolute; bottom: 22px; left: 22px; color: #fff; }
+        .feature-caption span { font-size: .78rem; color: var(--gold); letter-spacing: .15em; }
+        .feature-caption h3 { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 500; margin-top: 6px; }
+        .feature-number { position: absolute; top: 20px; right: 22px; font-size: .8rem; color: var(--gold); letter-spacing: .15em; }
+        .philosophy-feature i { font-size: 2rem; color: var(--gold); margin-top: 84px; margin-left: 22px; }
+        .philosophy-feature h3 { font-family: 'Playfair Display', serif; font-size: 1.45rem; font-weight: 500; margin: 14px 22px 0; }
+        .philosophy-feature p { color: #9a9aa5; font-weight: 300; margin: 10px 22px 22px; line-height: 1.6; font-size: .95rem; }
+        .dark-card { background: #12141a; }
+
+        /* PROCEDIMIENTOS */
+        .procedure-row {
+            display: flex; align-items: center; gap: 22px;
+            padding: 30px 10px; border-bottom: 1px solid var(--line);
+            text-decoration: none; color: #fff;
+            transition: padding .3s ease, background .3s ease;
+        }
+        .procedure-row:hover { background: rgba(201,169,106,.05); padding-left: 24px; }
+        .procedure-index { color: var(--gold); font-size: .8rem; letter-spacing: .12em; }
+        .procedure-row h3 { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 500; margin: 0; }
+        .procedure-row p { color: #8c8c97; font-weight: 300; margin: 4px 0 0; font-size: .92rem; }
+        .procedure-row i { margin-left: auto; color: #6b6b76; transition: color .2s; }
+        .procedure-row:hover i { color: var(--gold); }
+
+        /* STATEMENT */
+        .statement { position: relative; min-height: 420px; display: flex; align-items: center; overflow: hidden; }
+        .statement-image {
+            position: absolute; inset: 0;
+            background-image: linear-gradient(rgba(15,17,21,.55), rgba(15,17,21,.75)), url("https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=1800&q=90");
+            background-size: cover; background-position: center;
+        }
+        .statement h2 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 500; }
+        .statement h2 em { font-style: italic; color: var(--gold); }
+        .statement-link { color: #fff; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; margin-top: 20px; border-bottom: 1px solid rgba(255,255,255,.3); padding-bottom: 5px; }
+        .statement-link:hover { color: var(--gold); }
+
+        /* EQUIPO */
+        .doctor-card { background: #171a21; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; transition: transform .3s ease; }
+        .doctor-card:hover { transform: translateY(-4px); }
+        .doctor-photo { position: relative; height: 330px; overflow: hidden; }
+        .doctor-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; filter: saturate(.9); }
+        .doctor-social { position: absolute; bottom: 16px; right: 16px; display: flex; gap: 8px; opacity: 0; transition: opacity .3s; }
+        .doctor-card:hover .doctor-social { opacity: 1; }
+        .doctor-social a { width: 38px; height: 38px; border-radius: 50%; background: rgba(15,17,21,.8); color: #fff; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+        .doctor-social a:hover { background: var(--gold); color: #111; }
+        .doctor-meta { display: flex; align-items: center; justify-content: space-between; padding: 22px; }
+        .doctor-meta span { color: var(--gold); font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; }
+        .doctor-meta h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 500; margin: 6px 0 4px; }
+        .doctor-meta p { color: #8c8c97; font-weight: 300; font-size: .92rem; margin: 0; }
+        .doctor-meta > i { color: var(--gold); }
+
+        /* PROCESS */
+        .process { background: #12141a; }
+        .process-step { display: flex; gap: 24px; padding: 26px 0; border-top: 1px solid var(--line); }
+        .process-step:last-child { border-bottom: 1px solid var(--line); }
+        .process-step span { color: var(--gold); font-size: .85rem; letter-spacing: .1em; min-width: 36px; }
+        .process-step h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 500; margin: 0 0 6px; }
+        .process-step p { color: #8c8c97; font-weight: 300; margin: 0; line-height: 1.6; }
+
+        /* TESTIMONIOS */
+        .testimonial { max-width: 760px; margin: 0 auto; text-align: center; padding: 20px 30px; }
+        .quote-mark { font-family: 'Playfair Display', serif; font-size: 4.5rem; color: var(--gold); line-height: .6; margin-bottom: 26px; }
+        .testimonial > p { font-family: 'Playfair Display', serif; font-size: 1.45rem; font-weight: 400; color: #e5e5ea; line-height: 1.5; }
+        .testimonial-author { margin-top: 26px; display: flex; flex-direction: column; gap: 2px; }
+        .testimonial-author strong { color: #fff; }
+        .testimonial-author span { color: #8c8c97; font-size: .88rem; }
+        .carousel-control-prev, .carousel-control-next { width: 44px; height: 44px; top: 50%; transform: translateY(-50%); opacity: 1; }
+        .carousel-control-prev-icon, .carousel-control-next-icon { filter: invert(1); }
+
+        /* CONTACTO */
+        .contact { background: #12141a; }
+        .contact-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 500; margin-top: 1.1rem; }
+        .contact-title em { font-style: italic; color: var(--gold); }
+        .contact-copy { color: #9a9aa5; font-weight: 300; margin: 1.2rem 0 2rem; line-height: 1.7; }
+
+        .contact-details { display: flex; flex-direction: column; gap: 16px; }
+        .contact-details a, .contact-details span {
+            display: flex; align-items: center; gap: 14px;
+            color: #cfcfd6; text-decoration: none; font-weight: 300; font-size: 1rem;
+        }
+        .contact-details a:hover { color: var(--gold); }
+        .contact-details i {
+            width: 42px; height: 42px; border-radius: 50%;
+            background: rgba(201,169,106,.12); color: var(--gold);
+            display: inline-flex; align-items: center; justify-content: center; font-size: 1rem;
+        }
+
+        .contact-box { background: #171a21; border: 1px solid var(--line); border-radius: 20px; padding: 38px; }
+
+        .field label { font-size: .82rem; color: #b9b9c2; margin-bottom: 8px; display: block; }
+        .field input, .field select, .field textarea {
+            width: 100%; background: #12141a; border: 1px solid var(--line);
+            border-radius: 12px; padding: 12px 16px; color: #fff; font-size: .95rem; outline: none;
+            transition: border-color .2s;
+        }
+        .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--gold); }
+        .field select option { background: #12141a; }
+        .contact-box button { width: 100%; margin-top: 6px; border-radius: 12px; padding: 15px; }
+        .form-note { color: #6b6b76; }
+
+        .chat-launcher {
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            width: 100%; margin-top: 14px; padding: 15px;
+            background: rgba(201,169,106,.1); border: 1px dashed rgba(201,169,106,.5);
+            color: var(--gold); border-radius: 12px; font-weight: 600; text-decoration: none;
+            transition: background .25s ease;
+        }
+        .chat-launcher:hover { background: rgba(201,169,106,.2); color: var(--gold); }
+        .chat-launcher i { font-size: 1.15rem; }
+
+        /* FOOTER */
+        .footer { border-top: 1px solid var(--line); padding: 70px 0 30px; background: #0c0e12; }
+        .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.7rem; color: #fff; text-decoration: none; }
+        .footer-logo span { color: var(--gold); }
+        .footer p { color: #8c8c97; font-weight: 300; margin-top: 14px; }
+        .footer h5 { font-size: .82rem; letter-spacing: .15em; text-transform: uppercase; color: #fff; margin-bottom: 18px; }
+        .footer a { color: #8c8c97; text-decoration: none; display: block; font-weight: 300; margin-bottom: 10px; }
+        .footer a:hover { color: var(--gold); }
+        .footer-social { display: flex; gap: 10px; }
+        .footer-social a { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); display: inline-flex; align-items: center; justify-content: center; margin: 0; color: #cfcfd6; }
+        .footer-social a:hover { background: var(--gold); border-color: var(--gold); color: #111; }
+        .footer-bottom { border-top: 1px solid var(--line); margin-top: 50px; padding-top: 24px; display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; color: #6b6b76; font-size: .85rem; }
+
+        /* FLOTANTES */
+        .whatsapp, .back-top {
+            position: fixed; right: 22px; width: 50px; height: 50px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; text-decoration: none;
+            z-index: 1030; transition: all .3s ease;
+        }
+        .whatsapp { bottom: 90px; background: #25d366; color: #fff; font-size: 1.5rem; box-shadow: 0 10px 24px rgba(37,211,102,.35); }
+        .whatsapp:hover { transform: translateY(-3px); color: #fff; }
+        .back-top { bottom: 22px; background: var(--gold); color: #111; opacity: 0; visibility: hidden; }
+        .back-top.show { opacity: 1; visibility: visible; }
+        .back-top:hover { background: #fff; }
+
+        /* RESPONSIVE */
+        @media (max-width: 991px) {
+            .philosophy-grid { grid-template-columns: 1fr; }
+            .philosophy-feature { min-height: 240px; }
+            .section-space { padding: 80px 0; }
+            .navbar-collapse { background: rgba(15,17,21,.97); border-radius: 16px; padding: 18px; margin-top: 12px; }
+            .btn-nav { margin-top: 6px; }
+        }
+        @media (max-width: 575px) {
+            .trust-item { border-right: none; border-bottom: 1px solid var(--line); }
+            .contact-box { padding: 24px; }
+        }
+    </style>
 </head>
+
 <body>
 
-    <script>
+<!-- PRELOADER -->
+<div id="preloader">
+    <div class="preloader-logo">BELLEZA<span>.</span></div>
+    <div class="preloader-line"><span></span></div>
+</div>
+
+<!-- NAVBAR -->
+<nav id="mainNav" class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#inicio" aria-label="BELLEZA inicio">BELLEZA<span>.</span></a>
+
+        <button class="navbar-toggler shadow-none border-0" type="button"
+                data-bs-toggle="collapse" data-bs-target="#mainMenu"
+                aria-controls="mainMenu" aria-expanded="false" aria-label="Abrir navegación">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainMenu">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-4">
+                <li class="nav-item"><a class="nav-link active" href="#inicio">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="#filosofia">Filosofía</a></li>
+                <li class="nav-item"><a class="nav-link" href="#procedimientos">Procedimientos</a></li>
+                <li class="nav-item"><a class="nav-link" href="#equipo">Equipo</a></li>
+                <li class="nav-item"><a class="nav-link" href="#experiencias">Experiencias</a></li>
+                <li class="nav-item">
+                    <a class="btn btn-gold btn-nav" href="#contacto">Agendar consulta <i class="bi bi-arrow-up-right"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<header id="inicio" class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-shade"></div>
+
+    <div class="container hero-content">
+        <div class="row align-items-center">
+            <div class="col-xl-8 col-lg-9">
+                <div class="hero-kicker reveal">CIRUGÍA PLÁSTICA · ESTÉTICA · RECONSTRUCTIVA</div>
+                <h1 class="reveal delay-1">
+                    La mejor versión<br>
+                    de <em>vos misma.</em>
+                </h1>
+                <p class="hero-description reveal delay-2">
+                    Un enfoque personalizado que combina precisión médica,
+                    tecnología y resultados armónicos para que el cambio
+                    se sienta auténticamente tuyo.
+                </p>
+
+                <div class="hero-actions reveal delay-3">
+                    <a href="#contacto" class="btn btn-gold">
+                        Agendar consulta <i class="bi bi-arrow-right"></i>
+                    </a>
+                    <a href="https://www.chatbase.co/klh8Q7KZ1ZK_RhyfrrykC/help" target="_blank" rel="noopener" class="btn btn-outline-chat">
+                        <i class="bi bi-chat-dots"></i> Chateá con nuestro asistente
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-bottom">
+        <div class="container d-flex justify-content-between align-items-end">
+            <div class="hero-location"><i class="bi bi-geo-alt"></i> Montevideo · Uruguay</div>
+            <div class="hero-location"><i class="bi bi-clock"></i> Lun a Vie · 09:00 a 17:00</div>
+            <div class="hero-scroll">SCROLL <span></span></div>
+        </div>
+    </div>
+</header>
+
+<!-- TRUST STRIP -->
+<section class="trust-strip">
+    <div class="container">
+        <div class="row g-0">
+            <div class="col-6 col-lg-3 trust-item"><strong>15+</strong><span>Años de experiencia</span></div>
+            <div class="col-6 col-lg-3 trust-item"><strong>2.500+</strong><span>Pacientes acompañados</span></div>
+            <div class="col-6 col-lg-3 trust-item"><strong>1:1</strong><span>Atención personalizada</span></div>
+            <div class="col-6 col-lg-3 trust-item"><strong>360°</strong><span>Seguimiento integral</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- FILOSOFÍA -->
+<section id="filosofia" class="philosophy section-space">
+    <div class="container">
+        <div class="row align-items-end">
+            <div class="col-lg-5">
+                <div class="section-label">01 · NUESTRA FILOSOFÍA</div>
+                <h2 class="display-title">Que te reconozcas<br><em>en el resultado.</em></h2>
+            </div>
+            <div class="col-lg-6 offset-lg-1">
+                <p class="lead-copy">
+                    Para nosotros, un buen resultado no es el que transforma tu rostro
+                    o tu cuerpo en otra persona. Es el que respeta tus proporciones,
+                    tus rasgos y tu identidad.
+                </p>
+                <p class="body-copy mt-3">
+                    Cada consulta comienza escuchándote. Analizamos tus objetivos,
+                    evaluamos las alternativas y construimos un plan realista,
+                    seguro y adaptado a vos.
+                </p>
+            </div>
+        </div>
+
+        <div class="philosophy-grid mt-5">
+            <div class="philosophy-feature feature-large">
+                <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1400&q=90" alt="Profesional de clínica">
+                <div class="feature-caption">
+                    <span>01</span>
+                    <h3>Precisión<br>médica</h3>
+                </div>
+            </div>
+
+            <div class="philosophy-feature feature-small">
+                <div class="feature-number">02</div>
+                <i class="bi bi-person-hearts"></i>
+                <h3>Una experiencia<br>personal.</h3>
+                <p>Un equipo que te acompaña antes, durante y después.</p>
+            </div>
+
+            <div class="philosophy-feature feature-small dark-card">
+                <div class="feature-number">03</div>
+                <i class="bi bi-stars"></i>
+                <h3>Naturalidad<br>como objetivo.</h3>
+                <p>Armonía, proporción y resultados que se integran a vos.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROCEDIMIENTOS -->
+<section id="procedimientos" class="procedures section-space">
+    <div class="container">
+        <div class="row align-items-end mb-5">
+            <div class="col-lg-7">
+                <div class="section-label">02 · PROCEDIMIENTOS</div>
+                <h2 class="display-title">Tu objetivo.<br><em>Nuestra experiencia.</em></h2>
+            </div>
+            <div class="col-lg-4 offset-lg-1">
+                <p class="body-copy">
+                    Conocé algunas de nuestras áreas de especialización.
+                    La indicación de cada procedimiento requiere evaluación médica.
+                </p>
+            </div>
+        </div>
+
+        <div class="row g-0 procedure-list">
+            <div class="col-md-6">
+                <a href="#contacto" class="procedure-row">
+                    <span class="procedure-index">01</span>
+                    <div><h3>Rinoplastia</h3><p>Armonización nasal y funcional</p></div>
+                    <i class="bi bi-arrow-up-right"></i>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a href="#contacto" class="procedure-row">
+                    <span class="procedure-index">02</span>
+                    <div><h3>Mamoplastia</h3><p>Aumento, reducción y levantamiento</p></div>
+                    <i class="bi bi-arrow-up-right"></i>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a href="#contacto" class="procedure-row">
+                    <span class="procedure-index">03</span>
+                    <div><h3>Abdominoplastia</h3><p>Contorno y remodelación abdominal</p></div>
+                    <i class="bi bi-arrow-up-right"></i>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a href="#contacto" class="procedure-row">
+                    <span class="procedure-index">04</span>
+                    <div><h3>Liposucción</h3><p>Remodelación corporal localizada</p></div>
+                    <i class="bi bi-arrow-up-right"></i>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a href="#contacto" class="procedure-row">
+                    <span class="procedure-index">05</span>
+                    <div><h3>Blefaroplastia</h3><p>Armonización de la mirada</p></div>
+                    <i class="bi bi-arrow-up-right"></i>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a href="#contacto" class="procedure-row">
+                    <span class="procedure-index">06</span>
+                    <div><h3>Medicina estética</h3><p>Tratamientos faciales no quirúrgicos</p></div>
+                    <i class="bi bi-arrow-up-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STATEMENT -->
+<section class="statement">
+    <div class="statement-image"></div>
+    <div class="container position-relative">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="section-label" style="color:#fff;">UNA FORMA DIFERENTE DE ENTENDER LA ESTÉTICA</div>
+                <h2 class="mt-3">Menos exageración.<br><em>Más vos.</em></h2>
+                <a href="#contacto" class="statement-link">Conocé nuestro enfoque <i class="bi bi-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EQUIPO -->
+<section id="equipo" class="team section-space">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-7">
+                <div class="section-label">03 · ESPECIALISTAS</div>
+                <h2 class="display-title">Experiencia que<br><em>genera confianza.</em></h2>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <article class="doctor-card">
+                    <div class="doctor-photo">
+                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=1100&q=90" alt="Dra. Sofía Martínez">
+                        <div class="doctor-social">
+                            <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="doctor-meta">
+                        <div>
+                            <span>Cirugía plástica</span>
+                            <h3>Dra. Sofía Martínez</h3>
+                            <p>Cirugía facial y corporal · Atención personalizada</p>
+                        </div>
+                        <i class="bi bi-arrow-up-right"></i>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-lg-6">
+                <article class="doctor-card">
+                    <div class="doctor-photo">
+                        <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=1100&q=90" alt="Dr. Nicolás Fernández">
+                        <div class="doctor-social">
+                            <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="doctor-meta">
+                        <div>
+                            <span>Cirugía plástica</span>
+                            <h3>Dr. Nicolás Fernández</h3>
+                            <p>Cirugía estética y reconstructiva · Seguimiento integral</p>
+                        </div>
+                        <i class="bi bi-arrow-up-right"></i>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+    <div class="container section-space">
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="section-label">04 · EL PROCESO</div>
+                <h2 class="display-title">Todo empieza<br><em>con escucharte.</em></h2>
+                <p class="body-copy mt-4">
+                    Diseñamos una experiencia clara desde la primera conversación.
+                    Sin apuros, sin promesas irreales y con información para que
+                    puedas tomar tus decisiones con tranquilidad.
+                </p>
+            </div>
+
+            <div class="col-lg-6 offset-lg-1">
+                <div class="process-step">
+                    <span>01</span>
+                    <div><h3>Primera consulta</h3><p>Conversamos sobre tus objetivos, antecedentes y expectativas.</p></div>
+                </div>
+                <div class="process-step">
+                    <span>02</span>
+                    <div><h3>Evaluación personalizada</h3><p>Analizamos tu caso y las alternativas disponibles.</p></div>
+                </div>
+                <div class="process-step">
+                    <span>03</span>
+                    <div><h3>Planificación</h3><p>Definimos juntos un plan claro, realista y seguro.</p></div>
+                </div>
+                <div class="process-step">
+                    <span>04</span>
+                    <div><h3>Seguimiento</h3><p>Te acompañamos durante tu recuperación y controles posteriores.</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section id="experiencias" class="experiences section-space">
+    <div class="container">
+        <div class="text-center">
+            <div class="section-label justify-content-center">05 · EXPERIENCIAS</div>
+            <h2 class="display-title">Historias reales,<br><em>emociones reales.</em></h2>
+        </div>
+
+        <div id="testimonialCarousel" class="carousel slide mt-5" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="testimonial">
+                        <div class="quote-mark">“</div>
+                        <p>Desde la primera consulta sentí que me escuchaban de verdad. Me explicaron cada etapa y el acompañamiento fue excelente.</p>
+                        <div class="testimonial-author"><strong>Valentina R.</strong><span>Paciente · Montevideo</span></div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="testimonial">
+                        <div class="quote-mark">“</div>
+                        <p>Mi principal preocupación era lograr un resultado natural. El enfoque del equipo estuvo centrado en eso desde el comienzo.</p>
+                        <div class="testimonial-author"><strong>Camila M.</strong><span>Paciente · Montevideo</span></div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="testimonial">
+                        <div class="quote-mark">“</div>
+                        <p>La atención fue cercana y profesional. Tener toda la información antes de decidir me dio mucha tranquilidad.</p>
+                        <div class="testimonial-author"><strong>Mariana P.</strong><span>Paciente · Montevideo</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev" aria-label="Anterior">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next" aria-label="Siguiente">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto" class="contact">
+    <div class="container section-space">
+        <div class="row g-5 align-items-start">
+            <div class="col-lg-5">
+                <div class="section-label" style="color:#fff;">06 · CONTACTO</div>
+                <h2 class="contact-title">Hablemos de<br><em>tu proyecto.</em></h2>
+                <p class="contact-copy">
+                    El primer paso es una conversación. Dejanos tus datos
+                    y coordinamos una consulta.
+                </p>
+
+                <div class="contact-details">
+                    <a href="tel:+59829000000"><i class="bi bi-telephone"></i> +598 2900 0000</a>
+                    <a href="mailto:contacto@eleaclinica.com"><i class="bi bi-envelope"></i> contacto@eleaclinica.com</a>
+                    <span><i class="bi bi-geo-alt"></i> Montevideo, Uruguay</span>
+                    <span><i class="bi bi-clock"></i> Lunes a Viernes · 09:00 a 17:00 h</span>
+                </div>
+            </div>
+
+            <div class="col-lg-6 offset-lg-1">
+                <div class="contact-box">
+                    <form id="contactForm">
+                        <div class="row g-4">
+                            <div class="col-md-6 field">
+                                <label for="nombre">Nombre</label>
+                                <input id="nombre" type="text" placeholder="Tu nombre" required>
+                            </div>
+                            <div class="col-md-6 field">
+                                <label for="apellido">Apellido</label>
+                                <input id="apellido" type="text" placeholder="Tu apellido" required>
+                            </div>
+                            <div class="col-md-6 field">
+                                <label for="telefono">Teléfono</label>
+                                <input id="telefono" type="tel" placeholder="+598" required>
+                            </div>
+                            <div class="col-md-6 field">
+                                <label for="email">Email</label>
+                                <input id="email" type="email" placeholder="tu@email.com" required>
+                            </div>
+                            <div class="col-12 field">
+                                <label for="interes">Estoy interesado/a en</label>
+                                <select id="interes" required>
+                                    <option value="" selected disabled>Seleccionar procedimiento</option>
+                                    <option>Rinoplastia</option>
+                                    <option>Mamoplastia</option>
+                                    <option>Abdominoplastia</option>
+                                    <option>Liposucción</option>
+                                    <option>Blefaroplastia</option>
+                                    <option>Medicina estética</option>
+                                    <option>Consulta general</option>
+                                </select>
+                            </div>
+                            <div class="col-12 field">
+                                <label for="mensaje">Mensaje</label>
+                                <textarea id="mensaje" rows="4" placeholder="Contanos brevemente qué estás buscando..."></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-gold">Solicitar consulta <i class="bi bi-arrow-right"></i></button>
+                            </div>
+                            <div class="col-12">
+                                <a class="chat-launcher" href="https://www.chatbase.co/klh8Q7KZ1ZK_RhyfrrykC/help" target="_blank" rel="noopener">
+                                    <i class="bi bi-chat-dots"></i> Abrir el asistente virtual en pantalla completa
+                                </a>
+                                <small class="form-note mt-2 d-block"><i class="bi bi-lock"></i> Tus datos serán utilizados únicamente para responder a tu consulta.</small>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="row gy-5">
+            <div class="col-lg-5">
+                <a class="footer-logo" href="#inicio">BELLEZA<span>.</span></a>
+                <p>Cirugía plástica, estética y reconstructiva.<br>Montevideo · Uruguay</p>
+            </div>
+            <div class="col-6 col-lg-2">
+                <h5>Clínica</h5>
+                <a href="#filosofia">Nuestra filosofía</a>
+                <a href="#procedimientos">Procedimientos</a>
+                <a href="#equipo">Especialistas</a>
+            </div>
+            <div class="col-6 col-lg-2">
+                <h5>Información</h5>
+                <a href="#experiencias">Experiencias</a>
+                <a href="#contacto">Contacto</a>
+                <a href="#">Privacidad</a>
+            </div>
+            <div class="col-lg-3">
+                <h5>Seguinos</h5>
+                <div class="footer-social">
+                    <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="#" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 BELLEZA. Todos los derechos reservados.</span>
+            <span>Diseño & experiencia digital</span>
+        </div>
+    </div>
+</footer>
+
+<!-- WhatsApp -->
+<a href="https://wa.me/59829000000" class="whatsapp" aria-label="Contactar por WhatsApp">
+    <i class="bi bi-whatsapp"></i>
+</a>
+
+<button id="backTop" class="back-top" aria-label="Volver arriba">
+    <i class="bi bi-arrow-up"></i>
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    window.addEventListener("load", () => {
+        setTimeout(() => document.body.classList.add("loaded"), 450);
+    });
+
+    const nav = document.getElementById("mainNav");
+    const backTop = document.getElementById("backTop");
+
+    window.addEventListener("scroll", () => {
+        nav.classList.toggle("scrolled", window.scrollY > 40);
+        backTop.classList.toggle("show", window.scrollY > 500);
+    });
+
+    backTop.addEventListener("click", () => window.scrollTo({top: 0, behavior: "smooth"}));
+
+    document.querySelectorAll(".nav-link, .btn-nav").forEach(link => {
+        link.addEventListener("click", () => {
+            const menu = document.getElementById("mainMenu");
+            if (menu.classList.contains("show")) {
+                bootstrap.Collapse.getOrCreateInstance(menu).hide();
+            }
+        });
+    });
+
+    const form = document.getElementById("contactForm");
+    form.addEventListener("submit", e => {
+        e.preventDefault();
+        const button = form.querySelector("button");
+        const original = button.innerHTML;
+        button.innerHTML = 'Consulta enviada <i class="bi bi-check2"></i>';
+        button.disabled = true;
+        setTimeout(() => {
+            button.innerHTML = original;
+            button.disabled = false;
+            form.reset();
+        }, 2500);
+    });
+</script>
+
+<script>
 (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="klh8Q7KZ1ZK_RhyfrrykC";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
 </script>
-    
+<script>
+window.chatbase("setOptions", {
+    initialMessages: [
+        "¡Hola! 👋 Bienvenido/a a BELLEZA, clínica de cirugía plástica, estética y reconstructiva.",
+        "Soy tu asistente virtual. ¿En qué puedo ayudarte hoy?"
+    ],
+    suggestedMessages: [
+        "¿Qué procedimientos realizan?",
+        "¿Cómo puedo solicitar una consulta?",
+        "¿Dónde están ubicados?",
+        "¿Cuál es su horario?"
+    ],
+    messagePlaceholder: "Escribí tu consulta..."
+});
+</script>
+
 </body>
 </html>
